@@ -44,10 +44,16 @@ export const Hero = () => {
           </p>
 
           <div className="flex flex-wrap justify-center gap-4">
-            <button className="px-8 py-3 rounded-full bg-tech-cyan text-nature-900 font-bold hover:scale-105 transition-transform glow">
+            <button 
+              onClick={() => document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-8 py-3 rounded-full bg-tech-cyan text-nature-900 font-bold hover:scale-105 transition-transform glow"
+            >
               View the Ecosystem
             </button>
-            <button className="px-8 py-3 rounded-full border border-slate-700 hover:bg-slate-800 transition-colors">
+            <button 
+              onClick={() => document.getElementById('arcade')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-8 py-3 rounded-full border border-slate-700 hover:bg-slate-800 transition-colors"
+            >
               Whack a GIS Bug
             </button>
           </div>
