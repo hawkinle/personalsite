@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { MousePointer2, Target, Zap, Terminal as TerminalIcon, Info } from 'lucide-react';
 
 const BUGS = [
   { 
@@ -8,7 +9,7 @@ const BUGS = [
     label: 'ERROR 999999', 
     color: 'bg-red-500', 
     msg: 'POOF!',
-    desc: "The 'Check Engine' light of GIS. Something failed, and it's not telling you why."
+    desc: "Something failed, and it's not telling you why."
   },
   { 
     id: 'lock', 
@@ -16,15 +17,15 @@ const BUGS = [
     label: 'SCHEMA LOCK', 
     color: 'bg-yellow-500', 
     msg: 'UNLOCKED!',
-    desc: "A hidden process is hugging your database and won't let go. Ever."
+    desc: "A process is hugging your database and won't let go."
   },
   { 
     id: 'atlantic', 
     emoji: '🏝️', 
     label: 'ATLANTIC_SHIFT', 
     color: 'bg-blue-600', 
-    msg: 'RE-PROJECTED!',
-    desc: "Your layers just landed at (0,0) in the Atlantic Ocean. Check your CRS!"
+    msg: 'FIXED!',
+    desc: "Layers landed at (0,0) in the Atlantic Ocean."
   },
   { 
     id: 'zombie', 
@@ -32,32 +33,16 @@ const BUGS = [
     label: 'ZOMBIE_TASK', 
     color: 'bg-green-600', 
     msg: 'KILLED!',
-    desc: "Background geoprocessing is at 100% but refuses to actually finish."
-  },
-  { 
-    id: 'intersect', 
-    emoji: '✂️', 
-    label: 'SELF_INTERSECT', 
-    color: 'bg-orange-500', 
-    msg: 'VALIDATED!',
-    desc: "A polygon line crossed itself by 0.00001mm. Topology is now a nightmare."
-  },
-  { 
-    id: 'license', 
-    emoji: '🔑', 
-    label: 'LICENSE_TIMEOUT', 
-    color: 'bg-purple-500', 
-    msg: 'RENEWED!',
-    desc: "The license server can't see you. Hope you saved your work 10 mins ago."
+    desc: "Geoprocessing refuses to actually finish."
   },
 ];
 
 const ComicPop = ({ x, y, text }: { x: number, y: number, text: string }) => (
   <motion.div
     initial={{ scale: 0, rotate: -20, opacity: 1 }}
-    animate={{ scale: 2.5, rotate: 10, opacity: 0 }}
+    animate={{ scale: 2, rotate: 10, opacity: 0 }}
     style={{ left: x, top: y }}
-    className="absolute pointer-events-none z-50 font-black text-2xl text-yellow-400 italic select-none drop-shadow-[0_2px_2px_rgba(0,0,0,1)]"
+    className="absolute pointer-events-none z-50 font-black text-xl md:text-2xl text-yellow-400 italic select-none drop-shadow-[0_2px_2px_rgba(0,0,0,1)]"
   >
     {text}
   </motion.div>
@@ -71,19 +56,13 @@ export const GISGame = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHitting, setIsHitting] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [counts, setCounts] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.matchMedia('(pointer: coarse)').matches);
-    };
+    const checkMobile = () => setIsMobile(window.matchMedia('(pointer: coarse)').matches);
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!isMobile) {
-        setMousePos({ x: e.clientX, y: e.clientY });
-      }
-    };
+    const handleMouseMove = (e: MouseEvent) => { if (!isMobile) setMousePos({ x: e.clientX, y: e.clientY }); };
     window.addEventListener('mousemove', handleMouseMove);
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
@@ -110,7 +89,10 @@ export const GISGame = () => {
     setTimeout(() => setIsHitting(false), 100);
     
     if (isPlaying && activeBug?.index === index) {
+      const bugId = activeBug.type.id;
       setScore(s => s + 500);
+      setCounts(prev => ({ ...prev, [bugId]: (prev[bugId] || 0) + 1 }));
+      
       const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
       const newPop = {
         id: Date.now(),
@@ -125,113 +107,109 @@ export const GISGame = () => {
   };
 
   return (
-    <section className={`py-24 px-4 bg-[#020617] relative overflow-hidden group/arcade ${!isMobile ? 'cursor-none' : 'cursor-auto'}`}>
-      <div className="max-w-6xl mx-auto flex flex-col items-center">
+    <section className={`py-12 md:py-24 px-4 bg-[#020617] relative overflow-hidden group/arcade ${!isMobile ? 'cursor-none' : 'cursor-auto'}`}>
+      <div className="max-w-5xl mx-auto flex flex-col items-center">
         
         {/* Intro Narrative */}
-        <div className="max-w-3xl text-center mb-16">
-          <h3 className="text-2xl font-bold text-white mb-4 italic italic tracking-tight">Software is serious, but it shouldn't be solemn.</h3>
-          <p className="text-slate-400 font-medium leading-relaxed">
-            I built this arcade because I believe that technical resilience comes from a place of curiosity and, occasionally, a bit of healthy frustration. 
-            In my work—whether it's managing $200M projects or architecting spatial data—I've found that humor is often the best debugger for complex team dynamics. 
-            This is my small attempt to pay homage to the GIS bugs that have tested our patience over the years.
+        <div className="max-w-3xl text-center mb-12">
+          <h3 className="text-xl md:text-2xl font-bold text-white mb-4 italic tracking-tight underline decoration-tech-cyan/30">GIS BUG ARCADE</h3>
+          <p className="text-slate-400 text-sm md:text-base font-medium leading-relaxed px-2">
+            In my work managing $200M projects, I've found that humor is often the best debugger. 
+            This is a small attempt to pay homage to the GIS bugs that test our patience.
           </p>
         </div>
 
+        {/* MOBILE-FIRST SCOREBOARD & BESTIARY */}
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+          {/* Detailed Scoreboard */}
+          <div className="glass p-4 rounded-2xl border-white/5 bg-black/40">
+            <div className="flex items-center gap-2 mb-3">
+              <Target className="w-4 h-4 text-tech-cyan" />
+              <p className="text-xs font-mono text-tech-cyan uppercase tracking-widest">Bug_Smashed_Registry</p>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {BUGS.map(bug => (
+                <div key={bug.id} className="flex justify-between items-center bg-white/5 p-2 rounded-lg border border-white/5">
+                  <span className="text-[10px] font-mono text-slate-400 uppercase">{bug.id}</span>
+                  <span className="text-sm font-black text-white">{counts[bug.id] || 0}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Lore/Bestiary Panel */}
+          <div className="glass p-4 rounded-2xl border-white/5 bg-black/40">
+            <div className="flex items-center gap-2 mb-3">
+              <Info className="w-4 h-4 text-yellow-500" />
+              <p className="text-xs font-mono text-yellow-500 uppercase tracking-widest">Live_Debug_Lore</p>
+            </div>
+            <AnimatePresence mode="wait">
+              {activeBug ? (
+                <motion.div 
+                  key={activeBug.type.id}
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                  className="space-y-1"
+                >
+                  <p className="text-xs font-bold text-white">{activeBug.type.label}</p>
+                  <p className="text-[10px] text-slate-400 font-mono leading-tight">{activeBug.type.desc}</p>
+                </motion.div>
+              ) : (
+                <p className="text-[10px] text-slate-600 font-mono italic">System stable. No exceptions...</p>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+
         {/* VINTAGE ARCADE CABINET */}
-        <div className="relative w-full max-w-5xl pt-12 pb-4 bg-arcade-wood rounded-t-[4rem] rounded-b-[2rem] border-x-[16px] border-t-[16px] border-[#2d0f02] shadow-[0_50px_100px_rgba(0,0,0,0.9),inset_0_20px_40px_rgba(255,255,255,0.1)] overflow-hidden">
+        <div className="relative w-full pt-8 pb-4 bg-arcade-wood rounded-t-[3rem] rounded-b-[1.5rem] border-x-[10px] md:border-x-[16px] border-t-[10px] md:border-t-[16px] border-[#2d0f02] shadow-2xl overflow-hidden">
           
-          {/* MARQUEE */}
-          <div className="mx-8 mb-8 bg-black border-4 border-[#1e293b] p-4 flex justify-center items-center relative overflow-hidden shadow-[0_0_20px_rgba(255,0,255,0.3)]">
-            <div className="absolute inset-0 bg-[linear-gradient(45deg,#ff00ff22,#00f2ff22)] animate-pulse" />
-            <h2 className="text-3xl md:text-5xl font-black italic tracking-tighter text-white z-10 drop-shadow-[0_0_10px_rgba(0,242,255,0.8)] uppercase">
-              GIS_<span className="text-tech-cyan">LEGACY_CRUSHER</span>
+          {/* SMALLER MARQUEE FOR MOBILE */}
+          <div className="mx-4 md:mx-8 mb-6 bg-black border-2 border-[#1e293b] p-3 flex justify-center items-center relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-tech-cyan/10 to-transparent animate-pulse" />
+            <h2 className="text-xl md:text-4xl font-black italic tracking-tighter text-white z-10 drop-shadow-[0_0_10px_rgba(0,242,255,0.5)]">
+              GIS_<span className="text-tech-cyan">SMASHER</span>
             </h2>
           </div>
 
-          <div className="flex flex-col lg:flex-row bg-[#1e293b] p-4 md:p-8">
-            
-            {/* SIDE BEZEL - Lore & Instructions */}
-            <div className="hidden lg:flex flex-col w-64 gap-4 mr-8">
-              <div className="glass p-4 rounded-2xl border-white/5 bg-black/40">
-                <p className="text-[10px] font-mono text-tech-cyan uppercase mb-3 border-b border-tech-cyan/20 pb-1">Bestiary.exe</p>
-                <div className="space-y-4">
-                  <AnimatePresence mode="wait">
-                    {activeBug ? (
-                      <motion.div 
-                        key={activeBug.type.id}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: 10 }}
-                        className="space-y-2"
-                      >
-                        <p className="text-[11px] font-bold text-white font-mono">{activeBug.type.label}</p>
-                        <p className="text-[9px] text-slate-400 font-mono leading-relaxed">{activeBug.type.desc}</p>
-                      </motion.div>
-                    ) : (
-                      <p className="text-[9px] text-slate-600 font-mono italic">Waiting for unhandled exception...</p>
-                    )}
-                  </AnimatePresence>
-                </div>
-              </div>
-              
-              <div className="glass p-4 rounded-2xl border-white/5 bg-black/40 flex-grow">
-                <p className="text-[10px] font-mono text-slate-500 uppercase mb-2">Instructions</p>
-                <div className="text-[9px] text-slate-400 space-y-2 font-mono">
-                  <p>1. Whack rising bugs.</p>
-                  <p>2. Stabilize the system.</p>
-                  <p>3. Don't let the license expire.</p>
-                </div>
-              </div>
-            </div>
-
-            {/* THE MAIN SCREEN */}
-            <div className="flex-grow relative bg-black rounded-3xl border-8 border-nature-950 shadow-[inset_0_0_100px_rgba(0,242,255,0.1)] overflow-hidden min-h-[500px] flex flex-col">
-              
-              {/* CRT EFFECTS */}
-              <div className="absolute inset-0 pointer-events-none z-40 bg-[radial-gradient(circle,transparent_50%,rgba(0,0,0,0.4)_100%)] shadow-[inset_0_0_60px_rgba(0,0,0,0.8)]" />
-              <div className="absolute inset-0 pointer-events-none z-40 opacity-[0.05] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px]" />
-
-              <div className="absolute inset-0 z-10 p-6 flex flex-col">
-                <div className="flex justify-between items-start">
-                  <div className="bg-black/80 px-4 py-2 border-2 border-tech-cyan/20">
-                    <p className="text-[10px] font-mono text-tech-cyan/60 uppercase">System_Score</p>
-                    <p className="text-3xl font-black text-tech-cyan tabular-nums">{score.toString().padStart(6, '0')}</p>
+          <div className="bg-[#1e293b] p-3 md:p-8">
+            {/* THE SCREEN */}
+            <div className="relative bg-black aspect-square md:aspect-[4/3] rounded-xl overflow-hidden border-2 border-black">
+              <div className="absolute inset-0 z-10 p-4 flex flex-col">
+                <div className="flex justify-between items-start mb-4">
+                  <div className="bg-black/80 px-3 py-1 border border-tech-cyan/30">
+                    <p className="text-[8px] font-mono text-tech-cyan/60 uppercase">TOTAL</p>
+                    <p className="text-xl font-black text-tech-cyan tabular-nums">{score}</p>
                   </div>
-                  <div className="text-right glass px-3 py-1 rounded border-white/5">
-                    <p className="text-[10px] font-mono text-red-500 uppercase animate-pulse">Critical_Errors</p>
-                    <p className="text-[8px] font-mono text-slate-500">USER: LEITH_HAWKINS</p>
-                  </div>
+                  <button 
+                    onClick={() => { setIsPlaying(!isPlaying); if(!isPlaying) { setScore(0); setCounts({}); }}}
+                    className={`px-4 py-2 rounded font-black text-xs uppercase transition-all ${
+                      isPlaying ? 'bg-red-600 text-white' : 'bg-tech-cyan text-nature-900 shadow-lg'
+                    }`}
+                  >
+                    {isPlaying ? 'ABORT' : 'START'}
+                  </button>
                 </div>
 
                 <div className="flex-grow flex items-center justify-center">
                    {isPlaying ? (
-                     <div className="grid grid-cols-3 gap-4 w-full max-w-md aspect-square py-4">
+                     <div className="grid grid-cols-3 gap-2 md:gap-4 w-full max-w-sm aspect-square">
                         {[...Array(9)].map((_, i) => (
                           <div 
                             key={i} 
                             onMouseDown={(e) => whack(i, e)}
-                            className="relative h-full aspect-square bg-nature-950 rounded-full border-b-2 border-slate-800 shadow-[inset_0_5px_15px_rgba(0,0,0,0.8)] overflow-hidden"
+                            className="relative h-full aspect-square bg-nature-950 rounded-full border-b-2 border-slate-800 shadow-inner overflow-hidden"
                           >
                             <AnimatePresence>
                               {activeBug?.index === i && (
                                 <motion.div
-                                  initial={{ y: 80 }}
-                                  animate={{ y: 5 }}
-                                  exit={{ y: 80, scale: 0.5 }}
+                                  initial={{ y: 60 }} animate={{ y: 5 }} exit={{ y: 60, scale: 0.5 }}
                                   className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none"
                                 >
-                                  <div className={`w-12 h-12 md:w-20 md:h-20 ${activeBug.type.color} rounded-t-full rounded-b-lg relative shadow-2xl flex items-center justify-center text-3xl md:text-5xl border-t-2 border-white/20`}>
+                                  <div className={`w-10 h-10 md:w-20 md:h-20 ${activeBug.type.color} rounded-t-full rounded-b-lg shadow-2xl flex items-center justify-center text-2xl md:text-5xl`}>
                                     {activeBug.type.emoji}
-                                    <div className="absolute top-1/4 left-1/4 w-2 h-3 bg-white rounded-full">
-                                      <div className="w-1 h-1 bg-black rounded-full mx-auto mt-1" />
-                                    </div>
-                                    <div className="absolute top-1/4 right-1/4 w-2 h-3 bg-white rounded-full">
-                                      <div className="w-1 h-1 bg-black rounded-full mx-auto mt-1" />
-                                    </div>
                                   </div>
-                                  <div className="mt-1 px-2 py-0.5 bg-black/90 rounded text-[7px] font-mono font-black text-white border border-white/10 uppercase">
-                                    {activeBug.type.label}
+                                  <div className="mt-1 px-1 py-0.5 bg-black/90 rounded text-[6px] font-mono text-white uppercase">
+                                    {activeBug.type.label.split(' ')[0]}
                                   </div>
                                 </motion.div>
                               )}
@@ -247,82 +225,50 @@ export const GISGame = () => {
                         ))}
                      </div>
                    ) : (
-                     <div className="text-center">
-                        <motion.h3 
-                          animate={{ opacity: [1, 0, 1] }} 
-                          transition={{ repeat: Infinity, duration: 1.5 }}
-                          className="text-4xl md:text-6xl font-black text-yellow-400 italic mb-8 drop-shadow-[0_0_15px_rgba(250,204,21,0.5)]"
-                        >
-                          INSERT_COIN
-                        </motion.h3>
-                        <button 
-                          onClick={() => { setIsPlaying(true); setScore(0); }}
-                          className="px-10 py-4 bg-tech-cyan text-nature-900 font-black text-xl hover:scale-105 transition-transform rounded-sm shadow-[0_5px_0_#00c2cc] uppercase tracking-tighter"
-                        >
-                          Start_Debugging
-                        </button>
-                     </div>
+                     <motion.div animate={{ opacity: [1, 0, 1] }} transition={{ repeat: Infinity, duration: 1.5 }} className="text-yellow-400 font-black text-2xl md:text-4xl italic">
+                        INSERT_COIN
+                     </motion.div>
                    )}
                 </div>
               </div>
+              <div className="absolute inset-0 pointer-events-none z-30 shadow-[inset_0_0_40px_rgba(0,0,0,0.9)] opacity-50" />
             </div>
           </div>
 
-          {/* CONTROL PANEL DECK */}
-          <div className="mx-4 h-32 bg-[#1e293b] border-t-8 border-black rounded-b-2xl relative flex items-center justify-around px-8 shadow-[inset_0_10px_20px_rgba(0,0,0,0.5)]">
-             <div className="relative w-16 h-16 bg-black rounded-full border-4 border-slate-700">
-                <motion.div 
-                  animate={isPlaying ? { x: [-5, 5, -3, 3], y: [2, -2, 5, -5] } : {}}
-                  transition={{ repeat: Infinity, duration: 0.5 }}
-                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-full w-8 h-8 bg-red-600 rounded-full border-b-4 border-red-800 shadow-xl" 
-                />
+          {/* COMPACT CONTROL PANEL */}
+          <div className="h-16 bg-[#1e293b] border-t-4 border-black rounded-b-xl flex items-center justify-around px-4">
+             <div className="w-8 h-8 bg-black rounded-full border-2 border-slate-700 relative">
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-full w-4 h-4 bg-red-600 rounded-full" />
              </div>
-             <div className="flex gap-4">
-                <div className="w-10 h-10 bg-blue-600 rounded-full border-b-4 border-blue-800 shadow-lg active:scale-95" />
-                <div className="w-10 h-10 bg-yellow-500 rounded-full border-b-4 border-yellow-700 shadow-lg active:scale-95" />
-                <div className="w-10 h-10 bg-green-500 rounded-full border-b-4 border-green-700 shadow-lg active:scale-95" />
+             <div className="flex gap-2">
+                <div className="w-6 h-6 bg-blue-600 rounded-full border-b-2 border-blue-800 shadow-lg" />
+                <div className="w-6 h-6 bg-green-500 rounded-full border-b-2 border-green-800 shadow-lg" />
              </div>
-             <div className="w-12 h-16 bg-black rounded border-2 border-slate-700 flex flex-col items-center justify-center gap-2">
-                <div className="w-1 h-8 bg-yellow-600/50 rounded-full shadow-[inset_0_0_5px_black]" />
-                <p className="text-[6px] font-mono text-slate-500 tracking-tighter uppercase">25&cent;</p>
+             <div className="w-8 h-10 bg-black rounded border border-slate-700 flex flex-col items-center justify-center">
+                <div className="w-0.5 h-4 bg-yellow-600/50 rounded-full" />
              </div>
           </div>
         </div>
 
-        <div className="mt-8 text-center opacity-50 space-y-2">
-           <p className="text-white font-mono text-[10px] tracking-[0.3em] uppercase">Built for Resilience | Leith Hawkins</p>
-           <p className="text-slate-600 font-mono text-[8px] uppercase italic tracking-[0.1em]">Legacy GIS code detected. Executing Python purge...</p>
-        </div>
+        <p className="mt-6 text-slate-600 font-mono text-[8px] uppercase tracking-widest text-center px-4">
+          Optimized for Touch & Desktop | Built by Leith Hawkins
+        </p>
       </div>
 
-      {/* HIGH-PRECISION SLEDGEHAMMER CURSOR */}
+      {/* SLEDGEHAMMER (DESKTOP ONLY) */}
       {!isMobile && (
         <motion.div
           className="fixed pointer-events-none z-[100] hidden group-hover/arcade:block"
-          style={{ 
-            left: 0, 
-            top: 0,
-            x: mousePos.x - 30, 
-            y: mousePos.y - 60,
-          }}
-          animate={{ 
-            rotate: isHitting ? -110 : -35,
-            scale: isHitting ? 0.9 : 1,
-          }}
-          transition={{ 
-            rotate: { type: "spring", damping: 10, stiffness: 600, mass: 0.2 },
-            scale: { duration: 0.05 },
-            x: { duration: 0 }, 
-            y: { duration: 0 }
-          }}
+          style={{ left: 0, top: 0, x: mousePos.x - 30, y: mousePos.y - 60 }}
+          animate={{ rotate: isHitting ? -110 : -35, scale: isHitting ? 0.9 : 1 }}
+          transition={{ rotate: { type: "spring", damping: 10, stiffness: 600, mass: 0.2 }, x: { duration: 0 }, y: { duration: 0 } }}
         >
-          <div className="relative drop-shadow-[0_15px_15px_rgba(0,0,0,0.5)]">
-            <div className="w-16 h-10 bg-slate-400 rounded-lg border-2 border-slate-600 shadow-2xl relative overflow-hidden">
+          <div className="relative drop-shadow-2xl">
+            <div className="w-14 h-9 bg-slate-400 rounded-lg border-2 border-slate-600 relative overflow-hidden">
                <div className="absolute inset-x-0 top-0 h-1/2 bg-white/20" />
-               <div className="absolute inset-x-1 top-1 h-[1px] bg-white/30" />
             </div>
-            <div className="w-4 h-24 bg-amber-900 rounded-b-lg border-2 border-amber-950 mx-auto -mt-1 shadow-lg" />
-            <div className="absolute top-1 right-1 px-1 bg-tech-cyan text-[7px] font-black text-nature-900 rounded-sm">PYTHON</div>
+            <div className="w-4 h-24 bg-[#451a03] rounded-b-lg border-2 border-amber-950 mx-auto -mt-1" />
+            <div className="absolute top-1 right-1 px-1 bg-tech-cyan text-[6px] font-black text-nature-900 rounded-sm">PYTHON</div>
           </div>
         </motion.div>
       )}
