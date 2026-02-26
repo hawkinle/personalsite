@@ -70,14 +70,26 @@ export const GISGame = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHitting, setIsHitting] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia('(pointer: coarse)').matches);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
+      if (!isMobile) {
+        setMousePos({ x: e.clientX, y: e.clientY });
+      }
     };
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, [isMobile]);
 
   useEffect(() => {
     let timer: any;
@@ -113,7 +125,7 @@ export const GISGame = () => {
   };
 
   return (
-    <section className="py-24 px-4 bg-[#020617] relative overflow-hidden group/arcade cursor-none">
+    <section className={`py-24 px-4 bg-[#020617] relative overflow-hidden group/arcade ${!isMobile ? 'cursor-none' : 'cursor-auto'}`}>
       <div className="max-w-6xl mx-auto flex flex-col items-center">
         
         {/* Intro Narrative */}
@@ -284,37 +296,36 @@ export const GISGame = () => {
       </div>
 
       {/* HIGH-PRECISION SLEDGEHAMMER CURSOR */}
-      <motion.div
-        className="fixed pointer-events-none z-[100] hidden group-hover/arcade:block"
-        style={{ 
-          left: 0, 
-          top: 0,
-          x: mousePos.x - 30, 
-          y: mousePos.y - 60,
-        }}
-        animate={{ 
-          rotate: isHitting ? -110 : -35,
-          scale: isHitting ? 0.9 : 1,
-        }}
-        transition={{ 
-          rotate: { type: "spring", damping: 10, stiffness: 600, mass: 0.2 },
-          scale: { duration: 0.05 },
-          x: { duration: 0 }, // Zero latency movement
-          y: { duration: 0 }  // Zero latency movement
-        }}
-      >
-        <div className="relative drop-shadow-[0_15px_15px_rgba(0,0,0,0.5)]">
-          {/* Head */}
-          <div className="w-16 h-10 bg-slate-400 rounded-lg border-2 border-slate-600 shadow-2xl relative overflow-hidden">
-             <div className="absolute inset-x-0 top-0 h-1/2 bg-white/20" />
-             <div className="absolute inset-x-1 top-1 h-[1px] bg-white/30" />
+      {!isMobile && (
+        <motion.div
+          className="fixed pointer-events-none z-[100] hidden group-hover/arcade:block"
+          style={{ 
+            left: 0, 
+            top: 0,
+            x: mousePos.x - 30, 
+            y: mousePos.y - 60,
+          }}
+          animate={{ 
+            rotate: isHitting ? -110 : -35,
+            scale: isHitting ? 0.9 : 1,
+          }}
+          transition={{ 
+            rotate: { type: "spring", damping: 10, stiffness: 600, mass: 0.2 },
+            scale: { duration: 0.05 },
+            x: { duration: 0 }, 
+            y: { duration: 0 }
+          }}
+        >
+          <div className="relative drop-shadow-[0_15px_15px_rgba(0,0,0,0.5)]">
+            <div className="w-16 h-10 bg-slate-400 rounded-lg border-2 border-slate-600 shadow-2xl relative overflow-hidden">
+               <div className="absolute inset-x-0 top-0 h-1/2 bg-white/20" />
+               <div className="absolute inset-x-1 top-1 h-[1px] bg-white/30" />
+            </div>
+            <div className="w-4 h-24 bg-amber-900 rounded-b-lg border-2 border-amber-950 mx-auto -mt-1 shadow-lg" />
+            <div className="absolute top-1 right-1 px-1 bg-tech-cyan text-[7px] font-black text-nature-900 rounded-sm">PYTHON</div>
           </div>
-          {/* Handle */}
-          <div className="w-4 h-24 bg-amber-900 rounded-b-lg border-2 border-amber-950 mx-auto -mt-1 shadow-lg" />
-          {/* Tag */}
-          <div className="absolute top-1 right-1 px-1 bg-tech-cyan text-[7px] font-black text-nature-900 rounded-sm">PYTHON</div>
-        </div>
-      </motion.div>
+        </motion.div>
+      )}
     </section>
   );
 };
