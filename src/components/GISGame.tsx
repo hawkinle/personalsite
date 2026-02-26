@@ -116,6 +116,16 @@ export const GISGame = () => {
     <section className="py-24 px-4 bg-[#020617] relative overflow-hidden group/arcade cursor-none">
       <div className="max-w-6xl mx-auto flex flex-col items-center">
         
+        {/* Intro Narrative */}
+        <div className="max-w-3xl text-center mb-16">
+          <h3 className="text-2xl font-bold text-white mb-4 italic italic tracking-tight">Software is serious, but it shouldn't be solemn.</h3>
+          <p className="text-slate-400 font-medium leading-relaxed">
+            I built this arcade because I believe that technical resilience comes from a place of curiosity and, occasionally, a bit of healthy frustration. 
+            In my work—whether it's managing $200M projects or architecting spatial data—I've found that humor is often the best debugger for complex team dynamics. 
+            This is my small attempt to pay homage to the GIS bugs that have tested our patience over the years.
+          </p>
+        </div>
+
         {/* VINTAGE ARCADE CABINET */}
         <div className="relative w-full max-w-5xl pt-12 pb-4 bg-arcade-wood rounded-t-[4rem] rounded-b-[2rem] border-x-[16px] border-t-[16px] border-[#2d0f02] shadow-[0_50px_100px_rgba(0,0,0,0.9),inset_0_20px_40px_rgba(255,255,255,0.1)] overflow-hidden">
           
