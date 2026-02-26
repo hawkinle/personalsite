@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@theme {
+  --color-nature-950: #020617;
+  --color-nature-900: #062c1d;
+  --color-nature-800: #0a3d2a;
+  --color-nature-700: #12523b;
+  --color-nature-600: #1b6b4f;
+  
+  --color-tech-cyan: #00f2ff;
+  --color-tech-slate: #1e293b;
+  
+  --color-arcade-wood: #451a03;
+  --color-arcade-panel: #1e293b;
+  --color-arcade-bezel: #0f172a;
+  --color-arcade-neon: #ff00ff;
+
+  --font-mono: "Space Mono", monospace;
+  --font-sans: "Inter", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-nature-900 text-slate-100 font-sans antialiased overflow-x-hidden;
+  }
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glow {
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
