@@ -8,6 +8,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  base: '/personalsite/',
   server: {
     host: true,
     port: 5173,
