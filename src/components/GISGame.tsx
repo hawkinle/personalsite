@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MousePointer2, Target, Zap, Terminal as TerminalIcon, Info } from 'lucide-react';
+import { Target, Info } from 'lucide-react';
 
 const BUGS = [
   { 
