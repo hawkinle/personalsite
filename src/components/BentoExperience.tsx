@@ -48,39 +48,53 @@ export const BentoExperience = () => {
             PROVEN <span className="text-tech-cyan text-stroke">IMPACT</span>
           </h2>
           <p className="text-slate-400 font-mono text-sm max-w-xl leading-relaxed">
-            I lead complex programs and build high-integrity systems where environmental policy meets market transactions and spatial tech.
+            I lead complex programs and build high-integrity systems where environmental policy meets infrastructure compliance and spatial tech.
           </p>
         </div>
         <div className="hidden md:block glass px-6 py-4 rounded-2xl border-white/5 text-right max-w-md">
           <p className="text-[10px] font-mono text-slate-500 uppercase mb-1">Current_Mission</p>
           <p className="text-xs font-bold text-white tracking-tight leading-relaxed">
-            Implementing statewide biodiversity reforms at BCT, including overseeing a Biodiversity Offset Portfolio of 35 properties (tenancy agreements, asset management, and regulatory compliance).
+            Principal Biodiversity & Offsets Advisor at Inland Rail, overseeing a Biodiversity Offset Portfolio of 35 properties (tenancy, asset management, and environmental compliance).
           </p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[auto]">
-        {/* Card 1: BCT Leadership */}
+        {/* Card 1: Inland Rail Current Role */}
         <Card 
-          title="Implementing Statewide Biodiversity Reforms"
-          subtitle="Regional Manager @ BCT"
-          description="Directing regional operations for the NSW Biodiversity Conservation Trust. Implementing statewide biodiversity reforms and leading private land conservation investments, while building high-trust, data-driven teams that translate environmental policy into high-integrity biodiversity credit outcomes."
+          title="Strategic Offsets & Compliance"
+          subtitle="Principal Advisor @ Inland Rail"
+          description="Leading environmental compliance and biodiversity offset delivery for the Inland Rail program. Overseeing a complex portfolio of 35 offset properties, managing agricultural tenancy agreements, physical asset maintenance, and regulatory compliance across major linear infrastructure corridors."
           icon={ShieldCheck}
           className="md:col-span-2"
           items={[
-            "Executive oversight of regional biodiversity portfolios and implementation of statewide biodiversity reforms",
-            "Overseeing a Biodiversity Offset Portfolio of 35 properties, including tenancy agreements, asset management, and regulatory compliance",
-            "Facilitating high-value conservation agreements, credit acquisitions, and market transactions",
+            "Overseeing a Biodiversity Offset Portfolio of 35 properties, including agricultural tenancy agreements and asset management",
+            "Ensuring regulatory environmental compliance and offset delivery across key infrastructure segments",
+            "Liaising with government regulators, landholders, and corporate stakeholders to secure environmental outcomes"
+          ]}
+        />
+
+        {/* Card 2: BCT Leadership (Former) */}
+        <Card 
+          title="Statewide Biodiversity Reforms"
+          subtitle="Former Regional Manager @ BCT"
+          description="Directed regional operations for the NSW Biodiversity Conservation Trust. Implemented statewide biodiversity reforms and led private land conservation investments, while building high-trust, data-driven teams that translate environmental policy into high-integrity biodiversity credit outcomes."
+          icon={Leaf}
+          className="md:col-span-1"
+          items={[
+            "Executive oversight of regional biodiversity portfolios and implementation of statewide reforms",
+            "Facilitating conservation agreements and transactions in NSW Biodiversity Offset Schemes (BOS)",
             "Coaching senior policy, ecology, and spatial specialists into collaborative, high-trust leadership roles"
           ]}
         />
 
-        {/* Card 2: LLS Recovery */}
+        {/* Card 3: LLS Recovery */}
         <Card 
           title="Large-Scale Program Governance"
-          subtitle="$209M Grant Program Manager"
+          subtitle="Former $209M Grant Program Manager"
           description="Directed NSW's post-fire wildlife and habitat recovery program. Under extreme public scrutiny and tight legislative timelines, I scaled a cross-regional force of 65 specialists to execute complex conservation work, ensuring strict treasury auditing and governance."
           icon={Flame}
+          className="md:col-span-1"
           items={[
             "Managed and audited a $209M state-wide post-fire biodiversity recovery grant program",
             "Recruited, mobilized, and aligned a 65-person inter-disciplinary team across 11 regions",
@@ -88,7 +102,7 @@ export const BentoExperience = () => {
           ]}
         />
 
-        {/* Card 3: GIS Architecture */}
+        {/* Card 4: GIS Architecture */}
         <Card 
           title="Market Integrity & Spatial Tech"
           subtitle="Environmental Spatial Architect"
@@ -102,7 +116,20 @@ export const BentoExperience = () => {
           ]}
         />
 
-        {/* Card 4: Python & Automation */}
+        {/* Card 5: Emergency Response */}
+        <Card 
+          title="Crisis Leadership & Risk Management"
+          subtitle="Accredited Level 2 Incident Controller"
+          description="Accredited incident controller (PUAOPE018) leading high-stakes biosecurity and environmental emergency responses. Experienced in managing cross-agency teams, scaling operations rapidly, and maintaining calm directive authority under intense public and political pressure."
+          icon={Target}
+          className="md:col-span-1"
+          items={[
+            "Served as National Biosecurity Response Team Lead for emergency pest/disease outbreaks",
+            "Commanded multi-agency teams and resources under the Australasian Inter-service Incident Management System (AIIMS)"
+          ]}
+        />
+
+        {/* Card 6: Python & Automation */}
         <Card 
           title="De-risking Environmental Operations"
           subtitle="Process Automation & Analytics"
@@ -115,26 +142,14 @@ export const BentoExperience = () => {
             "Built interactive, real-time spatial dashboards for operational decision-making"
           ]}
         />
-
-        {/* Card 5: Emergency Response */}
-        <Card 
-          title="Crisis Leadership & Risk Management"
-          subtitle="Accredited Level 2 Incident Controller"
-          description="Accredited incident controller (PUAOPE018) leading high-stakes biosecurity and environmental emergency responses. Experienced in managing cross-agency teams, scaling operations rapidly, and maintaining calm directive authority under intense public and political pressure."
-          icon={Target}
-          items={[
-            "Served as National Biosecurity Response Team Lead for emergency pest/disease outbreaks",
-            "Commanded multi-agency teams and resources under the Australasian Inter-service Incident Management System (AIIMS)",
-            "Licensed Commercial UAV operator (CASA) utilizing drone technology for rapid spatial damage assessment"
-          ]}
-        />
         
-        {/* Card 6: The Long Game */}
+        {/* Card 7: The Long Game */}
         <Card 
           title="20+ Years in Ecosystem Services"
           subtitle="Deep Conservation Roots"
-          description="A career dedicated to private land conservation, catchment management, and environmental markets. From Namoi Catchment to Greening Australia and the BCT, I possess deep strategic knowledge of landholders, ecosystems, policy, and market dynamics."
+          description="A career dedicated to private land conservation, catchment management, and environmental markets. From Namoi Catchment to Greening Australia, BCT, and Inland Rail, I possess deep strategic knowledge of landholders, ecosystems, policy, and infrastructure dynamics."
           icon={Leaf}
+          className="md:col-span-1"
           items={[
             "Expertise in Biodiversity Offsets, Carbon Farming, and Land Stewardship contracts",
             "Bridging the gap between rural landholders, corporate credit buyers, and state regulators",
