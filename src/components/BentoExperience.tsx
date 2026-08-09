@@ -51,9 +51,11 @@ export const BentoExperience = () => {
             I lead complex programs and build high-integrity systems where environmental policy meets market transactions and spatial tech.
           </p>
         </div>
-        <div className="hidden md:block glass px-6 py-3 rounded-2xl border-white/5 text-right">
-          <p className="text-[10px] font-mono text-slate-500 uppercase">Current_Mission</p>
-          <p className="text-sm font-bold text-white tracking-tight">Implementing statewide biodiversity reforms at BCT</p>
+        <div className="hidden md:block glass px-6 py-4 rounded-2xl border-white/5 text-right max-w-md">
+          <p className="text-[10px] font-mono text-slate-500 uppercase mb-1">Current_Mission</p>
+          <p className="text-xs font-bold text-white tracking-tight leading-relaxed">
+            Implementing statewide biodiversity reforms at BCT, including overseeing a Biodiversity Offset Portfolio of 35 properties (tenancy agreements, asset management, and regulatory compliance).
+          </p>
         </div>
       </div>
 
@@ -67,6 +69,7 @@ export const BentoExperience = () => {
           className="md:col-span-2"
           items={[
             "Executive oversight of regional biodiversity portfolios and implementation of statewide biodiversity reforms",
+            "Overseeing a Biodiversity Offset Portfolio of 35 properties, including tenancy agreements, asset management, and regulatory compliance",
             "Facilitating high-value conservation agreements, credit acquisitions, and market transactions",
             "Coaching senior policy, ecology, and spatial specialists into collaborative, high-trust leadership roles"
           ]}
