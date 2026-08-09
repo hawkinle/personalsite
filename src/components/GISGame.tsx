@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Target, Info } from 'lucide-react';
 
@@ -57,7 +57,6 @@ export const GISGame = () => {
   const [isHitting, setIsHitting] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [counts, setCounts] = useState<Record<string, number>>({});
-  const popIdRef = useRef(0);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.matchMedia('(pointer: coarse)').matches);
@@ -79,22 +78,13 @@ export const GISGame = () => {
         const randomBug = BUGS[Math.floor(Math.random() * BUGS.length)];
         setActiveBug({ index: randomIndex, type: randomBug });
       }, 900);
+    } else {
+      setActiveBug(null);
     }
     return () => {
       if (timer) clearInterval(timer);
     };
   }, [isPlaying]);
-
-  const handleStartAbort = () => {
-    if (isPlaying) {
-      setIsPlaying(false);
-      setActiveBug(null);
-    } else {
-      setScore(0);
-      setCounts({});
-      setIsPlaying(true);
-    }
-  };
 
   const whack = (index: number, e: React.MouseEvent) => {
     setIsHitting(true);
@@ -106,9 +96,9 @@ export const GISGame = () => {
       setCounts(prev => ({ ...prev, [bugId]: (prev[bugId] || 0) + 1 }));
       
       const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
-      popIdRef.current += 1;
       const newPop = {
-        id: popIdRef.current,
+        // eslint-disable-next-line react-hooks/purity
+        id: Date.now(),
         x: e.clientX - rect.left,
         y: e.clientY - rect.top,
         text: activeBug.type.msg
@@ -194,7 +184,7 @@ export const GISGame = () => {
                     <p className="text-xl font-black text-tech-cyan tabular-nums">{score}</p>
                   </div>
                   <button 
-                    onClick={handleStartAbort}
+                    onClick={() => { setIsPlaying(!isPlaying); if(!isPlaying) { setScore(0); setCounts({}); }}}
                     className={`px-4 py-2 rounded font-black text-xs uppercase transition-all ${
                       isPlaying ? 'bg-red-600 text-white' : 'bg-tech-cyan text-nature-900 shadow-lg'
                     }`}
