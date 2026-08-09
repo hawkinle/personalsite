@@ -53,8 +53,8 @@ export const Skills = () => {
               <TreePine className="text-green-400 w-5 h-5" />
               <h3 className="font-bold text-xl uppercase tracking-tight">Governance & Strategy</h3>
             </div>
-            <SkillBar label="Environmental Program Governance" level={98} humor="Managing a $209M state portfolio, 65 staff, across 11 regions." />
-            <SkillBar label="Biodiversity Offsets & Policy (BOS)" level={95} humor="Navigating complex regulatory frameworks and transaction markets." />
+            <SkillBar label="Environmental Program Governance" level={98} humor="Managing $209M state grant programs, 65 staff, across 11 regions." />
+            <SkillBar label="Biodiversity Reforms & Policy" level={95} humor="Implementing statewide reforms and navigating complex transaction markets." />
             <SkillBar label="Executive & People Leadership" level={96} humor="Building high-trust, collaborative cultures in technical and field teams." />
             <SkillBar label="Crisis & Incident Control (AIIMS)" level={88} humor="Commanding emergency responses when public-facing systems are on the line." />
             <SkillBar label="Stakeholder Engagement" level={90} humor="Bridging the gap between landholders, developers, and government ministers." />

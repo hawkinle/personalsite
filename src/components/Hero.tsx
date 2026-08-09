@@ -36,7 +36,7 @@ export const Hero = () => {
           </h1>
 
           <p className="text-xl text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed font-medium">
-            I lead strategic environmental programs at the intersection of policy, markets, and spatial technology. With over <span className="text-white font-semibold">20 years of experience</span> managing <span className="text-white font-semibold">$209M biodiversity portfolios</span>, governing state-wide <span className="text-white font-semibold">Biodiversity Offset Schemes (BOS)</span>, and commanding emergency incident responses, I build the high-trust teams and spatial systems that scale carbon and offset markets.
+            I lead strategic environmental programs at the intersection of policy, markets, and spatial technology. With over <span className="text-white font-semibold">20 years of experience</span> managing <span className="text-white font-semibold">$209M grant programs</span>, implementing statewide <span className="text-white font-semibold">biodiversity reforms</span>, and commanding emergency incident responses, I build the high-trust teams and spatial systems that scale carbon and offset markets.
           </p>
 
           <div className="flex flex-wrap justify-center gap-4">

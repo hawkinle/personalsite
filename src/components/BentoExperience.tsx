@@ -53,20 +53,20 @@ export const BentoExperience = () => {
         </div>
         <div className="hidden md:block glass px-6 py-3 rounded-2xl border-white/5 text-right">
           <p className="text-[10px] font-mono text-slate-500 uppercase">Current_Mission</p>
-          <p className="text-sm font-bold text-white tracking-tight">Governing biodiversity offset schemes at BCT</p>
+          <p className="text-sm font-bold text-white tracking-tight">Implementing statewide biodiversity reforms at BCT</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[auto]">
         {/* Card 1: BCT Leadership */}
         <Card 
-          title="Leading Regional Conservation & Offsets"
+          title="Implementing Statewide Biodiversity Reforms"
           subtitle="Regional Manager @ BCT"
-          description="Directing regional operations for the NSW Biodiversity Conservation Trust. Governing complex regulatory programs and private land conservation investments, while building high-trust, data-driven teams that translate environmental policy into high-integrity biodiversity credit outcomes."
+          description="Directing regional operations for the NSW Biodiversity Conservation Trust. Implementing statewide biodiversity reforms and leading private land conservation investments, while building high-trust, data-driven teams that translate environmental policy into high-integrity biodiversity credit outcomes."
           icon={ShieldCheck}
           className="md:col-span-2"
           items={[
-            "Executive oversight of regional biodiversity portfolios and state-wide Offset Schemes (BOS)",
+            "Executive oversight of regional biodiversity portfolios and implementation of statewide biodiversity reforms",
             "Facilitating high-value conservation agreements, credit acquisitions, and market transactions",
             "Coaching senior policy, ecology, and spatial specialists into collaborative, high-trust leadership roles"
           ]}
@@ -75,11 +75,11 @@ export const BentoExperience = () => {
         {/* Card 2: LLS Recovery */}
         <Card 
           title="Large-Scale Program Governance"
-          subtitle="$209M Environmental Portfolio Manager"
+          subtitle="$209M Grant Program Manager"
           description="Directed NSW's post-fire wildlife and habitat recovery program. Under extreme public scrutiny and tight legislative timelines, I scaled a cross-regional force of 65 specialists to execute complex conservation work, ensuring strict treasury auditing and governance."
           icon={Flame}
           items={[
-            "Managed and audited a $209M state-wide post-fire biodiversity funding portfolio",
+            "Managed and audited a $209M state-wide post-fire biodiversity recovery grant program",
             "Recruited, mobilized, and aligned a 65-person inter-disciplinary team across 11 regions",
             "Ensured compliance, reporting transparency, and risk mitigation under high-stress conditions"
           ]}
