@@ -6,9 +6,9 @@ const SkillBar = ({ label, level, humor }: { label: string, level: number, humor
   <div className="mb-6">
     <div className="flex justify-between items-end mb-2">
       <span className="font-mono text-sm text-white font-bold">{label}</span>
-      <span className="text-[10px] font-mono text-slate-500 italic">{humor}</span>
+      <span className="text-[10px] font-mono text-slate-400/80 italic">{humor}</span>
     </div>
-    <div className="h-2 bg-nature-900 rounded-full overflow-hidden border border-white/5">
+    <div className="h-2 bg-black/40 rounded-full overflow-hidden border border-white/5">
       <motion.div 
         animate={{ width: `${level}%` }}
         className="h-full bg-tech-cyan glow shadow-[0_0_10px_rgba(0,242,255,0.5)]"

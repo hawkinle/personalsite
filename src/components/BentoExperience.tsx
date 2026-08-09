@@ -15,7 +15,7 @@ const Card = ({ title, subtitle, description, icon: Icon, className = "", items 
     animate={{ opacity: 1, scale: 1 }}
     className={`glass rounded-3xl p-8 flex flex-col justify-between hover:border-tech-cyan/30 transition-all group ${className}`}
   >
-    <div>
+    <div className="flex-grow flex flex-col">
       <div className="flex justify-between items-start mb-6">
         <div className="bg-tech-cyan/10 w-12 h-12 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
           <Icon className="text-tech-cyan w-6 h-6" />
@@ -23,19 +23,20 @@ const Card = ({ title, subtitle, description, icon: Icon, className = "", items 
         <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">{subtitle}</span>
       </div>
       <h3 className="text-2xl font-bold mb-4 text-white tracking-tight">{title}</h3>
-      <p className="text-slate-400 text-sm leading-relaxed mb-6 font-medium">
+      <p className="text-slate-400 text-sm leading-relaxed mb-6 font-medium flex-grow">
         {description}
       </p>
-      {items.length > 0 && (
-        <ul className="space-y-2 border-t border-white/5 pt-4">
-          {items.map((item: string, i: number) => (
-            <li key={i} className="text-[11px] font-mono text-slate-500 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-tech-cyan/40 rounded-full" /> {item}
-            </li>
-          ))}
-        </ul>
-      )}
     </div>
+    {items.length > 0 && (
+      <ul className="space-y-2 border-t border-white/5 pt-4 mt-6">
+        {items.map((item: string, i: number) => (
+          <li key={i} className="text-[11px] font-mono text-slate-400 flex items-start gap-2 leading-relaxed">
+            <span className="w-1.5 h-1.5 bg-tech-cyan/40 rounded-full mt-1.5 shrink-0" />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    )}
   </motion.div>
 );
 

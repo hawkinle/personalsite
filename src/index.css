@@ -21,7 +21,9 @@
 
 @layer base {
   body {
-    @apply bg-nature-900 text-slate-100 font-sans antialiased overflow-x-hidden;
+    background-color: #03120b;
+    background-image: radial-gradient(circle at 50% 0%, #083c27 0%, #020906 100%);
+    @apply text-slate-100 font-sans antialiased overflow-x-hidden;
   }
 }
 
