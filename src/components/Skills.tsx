@@ -34,28 +34,30 @@ export const Skills = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Spatial & Software */}
+          {/* Spatial & Tech */}
           <div>
             <div className="flex items-center gap-3 mb-8">
               <Code2 className="text-tech-cyan w-5 h-5" />
-              <h3 className="font-bold text-xl uppercase tracking-tight">Spatial Architecture</h3>
+              <h3 className="font-bold text-xl uppercase tracking-tight">Market & Spatial Tech</h3>
             </div>
-            <SkillBar label="Python / Numba" level={95} humor="Optimizing for speed." />
-            <SkillBar label="GIS / PostGIS" level={90} humor="Solving 'The Atlantic Island' bug." />
-            <SkillBar label="React / TypeScript" level={85} humor="Building UIs for ecologists." />
-            <SkillBar label="Cloud Migration" level={80} humor="Moving LLS to the future." />
+            <SkillBar label="Spatial Analytics & QGIS" level={95} humor="Ensuring offset data is grounded in geography, not coordinates in the Atlantic." />
+            <SkillBar label="Spatial Modeling (Python/GEE)" level={92} humor="High-performance simulations for habitat connectivity and carbon baselines." />
+            <SkillBar label="Credit Verification Systems" level={88} humor="Designing custom UIs and tools for ecological field auditing." />
+            <SkillBar label="Cloud Infrastructure (AWS)" level={80} humor="Scaling state-wide spatial data pipelines for regulatory compliance." />
+            <SkillBar label="Technical Product Delivery" level={85} humor="Translating complex offset policy requirements into automated registry tools." />
           </div>
 
-          {/* Conservation & Strategy */}
+          {/* Governance & Strategy */}
           <div>
             <div className="flex items-center gap-3 mb-8">
               <TreePine className="text-green-400 w-5 h-5" />
-              <h3 className="font-bold text-xl uppercase tracking-tight">Ecosystem Strategy</h3>
+              <h3 className="font-bold text-xl uppercase tracking-tight">Governance & Strategy</h3>
             </div>
-            <SkillBar label="NRM Leadership" level={98} humor="Managing $209M in complexity." />
-            <SkillBar label="Biodiversity Policy" level={92} humor="Offsetting the impossible." />
-            <SkillBar label="Incident Control" level={88} humor="Crisis? What crisis?" />
-            <SkillBar label="Koala Communication" level={75} humor="They're tough negotiators." />
+            <SkillBar label="Environmental Program Governance" level={98} humor="Managing a $209M state portfolio, 65 staff, across 11 regions." />
+            <SkillBar label="Biodiversity Offsets & Policy (BOS)" level={95} humor="Navigating complex regulatory frameworks and transaction markets." />
+            <SkillBar label="Executive & People Leadership" level={96} humor="Building high-trust, collaborative cultures in technical and field teams." />
+            <SkillBar label="Crisis & Incident Control (AIIMS)" level={88} humor="Commanding emergency responses when public-facing systems are on the line." />
+            <SkillBar label="Stakeholder Engagement" level={90} humor="Bridging the gap between landholders, developers, and government ministers." />
           </div>
         </div>
 

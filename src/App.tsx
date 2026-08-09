@@ -1,20 +1,75 @@
-
+import { useState } from 'react';
 import { Hero } from './components/Hero';
 import { BentoExperience } from './components/BentoExperience';
 import { GISGame } from './components/GISGame';
 import { Skills } from './components/Skills';
-import { Mail, Linkedin, Github, Phone } from 'lucide-react';
+import { Mail, Linkedin, Github, Phone, Menu, X } from 'lucide-react';
 
 function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-nature-900 text-white">
       <nav className="fixed top-0 w-full z-50 glass border-b border-white/5 py-4 px-8 flex justify-between items-center">
         <div className="font-mono font-bold text-tech-cyan text-lg">LEITH_HAWKINS_v2.0</div>
-        <div className="hidden md:flex gap-8 text-sm font-mono text-slate-400">
+        
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-8 text-sm font-mono text-slate-400">
           <a href="#experience" className="hover:text-tech-cyan transition-colors">EXPERIENCE</a>
-          <a href="#arcade" className="hover:text-tech-cyan transition-colors">THE_ARCADE</a>
-          <a href="#skills" className="hover:text-tech-cyan transition-colors">SKILLS</a>
+          <a href="#arcade" className="hover:text-tech-cyan transition-colors">GIS_ARCADE</a>
+          <a href="#skills" className="hover:text-tech-cyan transition-colors">CAPABILITIES</a>
+          <a 
+            href="/Leith_Hawkins_CV.pdf" 
+            download 
+            className="px-3 py-1.5 rounded border border-tech-cyan/30 text-tech-cyan hover:border-tech-cyan hover:bg-tech-cyan/10 transition-all font-bold text-xs"
+          >
+            DOWNLOAD_CV
+          </a>
         </div>
+
+        {/* Mobile Menu Button */}
+        <button 
+          onClick={() => setIsMenuOpen(!isMenuOpen)} 
+          className="md:hidden text-slate-400 hover:text-tech-cyan transition-colors"
+          aria-label="Toggle menu"
+        >
+          {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+
+        {/* Mobile Dropdown */}
+        {isMenuOpen && (
+          <div className="absolute top-full left-0 w-full glass border-b border-white/5 py-6 px-8 flex flex-col gap-4 text-sm font-mono text-slate-400 md:hidden">
+            <a 
+              href="#experience" 
+              onClick={() => setIsMenuOpen(false)} 
+              className="hover:text-tech-cyan transition-colors py-2 border-b border-white/5"
+            >
+              EXPERIENCE
+            </a>
+            <a 
+              href="#arcade" 
+              onClick={() => setIsMenuOpen(false)} 
+              className="hover:text-tech-cyan transition-colors py-2 border-b border-white/5"
+            >
+              GIS_ARCADE
+            </a>
+            <a 
+              href="#skills" 
+              onClick={() => setIsMenuOpen(false)} 
+              className="hover:text-tech-cyan transition-colors py-2 border-b border-white/5"
+            >
+              CAPABILITIES
+            </a>
+            <a 
+              href="/Leith_Hawkins_CV.pdf" 
+              download
+              onClick={() => setIsMenuOpen(false)} 
+              className="hover:text-tech-cyan text-tech-cyan transition-colors py-2 font-bold"
+            >
+              DOWNLOAD CV (PDF)
+            </a>
+          </div>
+        )}
       </nav>
       
       <main>

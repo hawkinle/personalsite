@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
-
-import { TreePine, Cpu } from 'lucide-react';
+import { TreePine, Cpu, Download } from 'lucide-react';
 
 export const Hero = () => {
   return (
@@ -24,23 +23,20 @@ export const Hero = () => {
         >
           <div className="flex justify-center gap-4 mb-6">
             <span className="px-3 py-1 rounded-full text-xs font-mono border border-tech-cyan text-tech-cyan bg-tech-cyan/10">
-              <Cpu className="inline-block w-3 h-3 mr-1" /> SOFTWARE ARCHITECT
+              <TreePine className="inline-block w-3 h-3 mr-1" /> ENVIRONMENTAL MARKET LEADER
             </span>
             <span className="px-3 py-1 rounded-full text-xs font-mono border border-green-400 text-green-400 bg-green-400/10">
-              <TreePine className="inline-block w-3 h-3 mr-1" /> CONSERVATION LEADER
+              <Cpu className="inline-block w-3 h-3 mr-1" /> SPATIAL SYSTEMS STRATEGIST
             </span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-            Architecting <span className="text-tech-cyan">Ecosystems</span> <br />
-            with <span className="text-green-400">Code</span> & Conservation
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tighter">
+            Governing <span className="text-tech-cyan">Environmental Markets</span> <br />
+            with <span className="text-green-400">Spatial Intelligence</span>
           </h1>
 
-          <p className="text-xl text-slate-400 max-w-3xl mx-auto mb-10 leading-relaxed">
-            I bridge the gap between complex natural landscapes and high-performance spatial technology. 
-            From managing <span className="text-slate-200 font-semibold">$209M biodiversity recovery programs</span> to 
-            engineering <span className="text-slate-200 font-semibold">AI-driven GIS architectures</span>, 
-            I build the digital tools that protect our physical world.
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed font-medium">
+            I lead strategic environmental programs at the intersection of policy, markets, and spatial technology. With over <span className="text-white font-semibold">20 years of experience</span> managing <span className="text-white font-semibold">$209M biodiversity portfolios</span>, governing state-wide <span className="text-white font-semibold">Biodiversity Offset Schemes (BOS)</span>, and commanding emergency incident responses, I build the high-trust teams and spatial systems that scale carbon and offset markets.
           </p>
 
           <div className="flex flex-wrap justify-center gap-4">
@@ -48,14 +44,15 @@ export const Hero = () => {
               onClick={() => document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' })}
               className="px-8 py-3 rounded-full bg-tech-cyan text-nature-900 font-bold hover:scale-105 transition-transform glow"
             >
-              View the Ecosystem
+              View Strategic Impact
             </button>
-            <button 
-              onClick={() => document.getElementById('arcade')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-8 py-3 rounded-full border border-slate-700 hover:bg-slate-800 transition-colors"
+            <a 
+              href="/Leith_Hawkins_CV.pdf"
+              download
+              className="px-8 py-3 rounded-full border border-tech-cyan text-tech-cyan font-bold hover:scale-105 hover:bg-tech-cyan/10 transition-all flex items-center gap-2"
             >
-              Whack a GIS Bug
-            </button>
+              <Download className="w-4.5 h-4.5" /> Download Executive CV
+            </a>
           </div>
         </motion.div>
       </div>
@@ -66,3 +63,4 @@ export const Hero = () => {
     </section>
   );
 };
+

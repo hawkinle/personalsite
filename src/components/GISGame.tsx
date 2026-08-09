@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Target, Info } from 'lucide-react';
 
@@ -57,6 +57,7 @@ export const GISGame = () => {
   const [isHitting, setIsHitting] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [counts, setCounts] = useState<Record<string, number>>({});
+  const popIdRef = useRef(0);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.matchMedia('(pointer: coarse)').matches);
@@ -71,18 +72,29 @@ export const GISGame = () => {
   }, [isMobile]);
 
   useEffect(() => {
-    let timer: any;
+    let timer: ReturnType<typeof setInterval> | undefined;
     if (isPlaying) {
       timer = setInterval(() => {
         const randomIndex = Math.floor(Math.random() * 9);
         const randomBug = BUGS[Math.floor(Math.random() * BUGS.length)];
         setActiveBug({ index: randomIndex, type: randomBug });
       }, 900);
-    } else {
-      setActiveBug(null);
     }
-    return () => clearInterval(timer);
+    return () => {
+      if (timer) clearInterval(timer);
+    };
   }, [isPlaying]);
+
+  const handleStartAbort = () => {
+    if (isPlaying) {
+      setIsPlaying(false);
+      setActiveBug(null);
+    } else {
+      setScore(0);
+      setCounts({});
+      setIsPlaying(true);
+    }
+  };
 
   const whack = (index: number, e: React.MouseEvent) => {
     setIsHitting(true);
@@ -94,8 +106,9 @@ export const GISGame = () => {
       setCounts(prev => ({ ...prev, [bugId]: (prev[bugId] || 0) + 1 }));
       
       const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+      popIdRef.current += 1;
       const newPop = {
-        id: Date.now(),
+        id: popIdRef.current,
         x: e.clientX - rect.left,
         y: e.clientY - rect.top,
         text: activeBug.type.msg
@@ -114,8 +127,8 @@ export const GISGame = () => {
         <div className="max-w-3xl text-center mb-12">
           <h3 className="text-xl md:text-2xl font-bold text-white mb-4 italic tracking-tight underline decoration-tech-cyan/30">GIS BUG ARCADE</h3>
           <p className="text-slate-400 text-sm md:text-base font-medium leading-relaxed px-2">
-            In my work managing $200M projects, I've found that humor is often the best debugger. 
-            This is a small attempt to pay homage to the GIS bugs that test our patience.
+            In environmental and carbon markets, spatial data is the currency of trust. 
+            This is a lighthearted tribute to the classic spatial anomalies and database bugs my teams automate away to secure market integrity.
           </p>
         </div>
 
@@ -181,7 +194,7 @@ export const GISGame = () => {
                     <p className="text-xl font-black text-tech-cyan tabular-nums">{score}</p>
                   </div>
                   <button 
-                    onClick={() => { setIsPlaying(!isPlaying); if(!isPlaying) { setScore(0); setCounts({}); }}}
+                    onClick={handleStartAbort}
                     className={`px-4 py-2 rounded font-black text-xs uppercase transition-all ${
                       isPlaying ? 'bg-red-600 text-white' : 'bg-tech-cyan text-nature-900 shadow-lg'
                     }`}
